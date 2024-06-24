@@ -1,0 +1,85 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/vinicius/Downloads/ListaTarefas/ListaTarefasBackend/ListaTarefasBackend.csproj": {}
+  },
+  "projects": {
+    "/home/vinicius/Downloads/ListaTarefas/ListaTarefasBackend/ListaTarefasBackend.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/vinicius/Downloads/ListaTarefas/ListaTarefasBackend/ListaTarefasBackend.csproj",
+        "projectName": "ListaTarefasBackend",
+        "projectPath": "/home/vinicius/Downloads/ListaTarefas/ListaTarefasBackend/ListaTarefasBackend.csproj",
+        "packagesPath": "/home/vinicius/.nuget/packages/",
+        "outputPath": "/home/vinicius/Downloads/ListaTarefas/ListaTarefasBackend/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/vinicius/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Cors": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.22, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.22, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.22, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[3.1.25, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.426/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
