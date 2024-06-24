@@ -1,0 +1,4 @@
+<form (submit)="adicionarTarefa()">
+  <input type="text" placeholder="Nova tarefa" [(ngModel)]="novaTarefa" [ngModelOptions]="{ standalone: true }">
+  <button type="submit">Adicionar</button>
+</form>

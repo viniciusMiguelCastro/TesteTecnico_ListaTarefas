@@ -1,0 +1,16 @@
+<!-- lista-tarefas.component.html -->
+
+<div class="lista-tarefas">
+  <h1>Lista de Tarefas</h1>
+  <ul>
+    <li *ngFor="let tarefa of tarefas">
+      {{ tarefa }}
+      <button (click)="marcarConcluida(tarefa)">Marcar como Concluída</button>
+      <button (click)="excluirTarefa(tarefa)">Excluir</button>
+    </li>
+  </ul>
+  <form (submit)="adicionarTarefa($event)">
+    <input type="text" placeholder="Nova tarefa" name="novaTarefa" [(ngModel)]="novaTarefa" [ngModelOptions]="{ standalone: true }">
+    <button type="submit">Adicionar</button>
+  </form>
+</div>
