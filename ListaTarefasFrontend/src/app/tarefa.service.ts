@@ -21,8 +21,12 @@ export class TarefaService {
     return this.http.post<any>(this.apiUrl, { descricao });
   }
 
+  atualizarTarefa(tarefa: { id: number, descricao: string, concluida: boolean }): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${tarefa.id}`, tarefa);
+  }
+  
   marcarConcluida(id: number): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, { concluida: true });
+    return this.http.put<any>(`${this.apiUrl}/${id}`, {concluida: true });
   }
 
   excluirTarefa(id: number): Observable<any> {

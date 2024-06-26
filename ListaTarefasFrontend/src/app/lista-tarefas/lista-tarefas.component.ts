@@ -10,9 +10,8 @@
 // })
 // export class ListaTarefasComponent implements OnInit {
 
-//   tarefas: any[] = []; // Inicializa a propriedade tarefas como um array vazio
-
-//   novaTarefa: string = ''
+//   tarefas: { id: number, descricao: string, concluida: boolean }[] = [];
+//   novaTarefa: string = '';
 
 //   constructor(private tarefaService: TarefaService) { }
 
@@ -20,56 +19,59 @@
 //     this.carregarTarefas();
 //   }
 
-//   carregarTarefas(): void {
+//   carregarTarefas() {
 //     this.tarefaService.getTarefas().subscribe(
-//       (tarefas) => {
+//       tarefas => {
 //         this.tarefas = tarefas;
 //       },
-//       (error) => {
+//       error => {
 //         console.error('Erro ao carregar tarefas:', error);
 //       }
 //     );
 //   }
 
-//   marcarConcluida(tarefa: any): void {
+
+//   marcarConcluida(tarefa: { id: number, descricao: string, concluida: boolean }) {
 //     this.tarefaService.marcarConcluida(tarefa.id).subscribe(
-//       (res) => {
-//         console.log('Tarefa marcada como concluída:', tarefa);
-//         this.carregarTarefas(); // Atualiza a lista após marcar como concluída
+//       response => {
+//         console.log('Tarefa marcada como concluída:', response);
+//         this.carregarTarefas(); // Atualiza a lista de tarefas após a marcação
 //       },
-//       (error) => {
+//       error => {
 //         console.error('Erro ao marcar tarefa como concluída:', error);
 //       }
 //     );
 //   }
 
-//   excluirTarefa(tarefa: any): void {
+  
+
+//   excluirTarefa(tarefa: { id: number, descricao: string, concluida: boolean }) {
 //     this.tarefaService.excluirTarefa(tarefa.id).subscribe(
-//       (res) => {
-//         console.log('Tarefa excluída com sucesso:', tarefa);
-//         this.carregarTarefas(); // Atualiza a lista após excluir
+//       response => {
+//         // Remova a tarefa da lista localmente
+//         this.tarefas = this.tarefas.filter(t => t.id !== tarefa.id);
 //       },
-//       (error) => {
+//       error => {
 //         console.error('Erro ao excluir tarefa:', error);
 //       }
 //     );
 //   }
 
-//   adicionarTarefa(descricao: any): void {
-//     this.tarefaService.adicionarTarefa(descricao).subscribe(
-//       (novaTarefa) => {
-//         console.log('Tarefa adicionada com sucesso:', novaTarefa);
-//         this.carregarTarefas(); // Atualiza a lista após adicionar
+//   adicionarTarefa(event: any) {
+//     event.preventDefault(); // Previne o comportamento padrão do formulário
+//     this.tarefaService.adicionarTarefa(this.novaTarefa).subscribe(
+//       response => {
+//         // Supondo que a resposta contenha a nova tarefa adicionada
+//         this.tarefas.push(response);
+//         this.novaTarefa = ''; // Limpa o campo de nova tarefa após adicionar
 //       },
-//       (error) => {
+//       error => {
 //         console.error('Erro ao adicionar tarefa:', error);
 //       }
 //     );
 //   }
 // }
 
-
-// lista-tarefas.component.ts
 
 import { Component, OnInit } from '@angular/core';
 import { TarefaService } from '../tarefa.service';
@@ -102,17 +104,42 @@ export class ListaTarefasComponent implements OnInit {
   }
 
   marcarConcluida(tarefa: { id: number, descricao: string, concluida: boolean }) {
-    this.tarefaService.marcarConcluida(tarefa.id); // Ajustado para passar apenas o ID
+    tarefa.concluida = true;
+    this.tarefaService.atualizarTarefa(tarefa).subscribe(
+      (response: any) => {
+        console.log('Tarefa marcada como concluída:', response);
+        this.carregarTarefas(); // Atualiza a lista de tarefas após a marcação
+      },
+      (error: any) => {
+        console.error('Erro ao marcar tarefa como concluída:', error);
+      }
+    );
   }
 
   excluirTarefa(tarefa: { id: number, descricao: string, concluida: boolean }) {
-    this.tarefaService.excluirTarefa(tarefa.id); // Ajustado para passar apenas o ID
+    this.tarefaService.excluirTarefa(tarefa.id).subscribe(
+      (response: any) => {
+        // Remova a tarefa da lista localmente
+        this.tarefas = this.tarefas.filter(t => t.id !== tarefa.id);
+      },
+      (error: any) => {
+        console.error('Erro ao excluir tarefa:', error);
+      }
+    );
   }
 
   adicionarTarefa(event: any) {
     event.preventDefault(); // Previne o comportamento padrão do formulário
-    this.tarefaService.adicionarTarefa(this.novaTarefa);
-    this.novaTarefa = ''; // Limpa o campo de nova tarefa após adicionar
+    this.tarefaService.adicionarTarefa(this.novaTarefa).subscribe(
+      (response: any) => {
+        // Supondo que a resposta contenha a nova tarefa adicionada
+        this.tarefas.push(response);
+        this.novaTarefa = ''; // Limpa o campo de nova tarefa após adicionar
+      },
+      (error: any) => {
+        console.error('Erro ao adicionar tarefa:', error);
+      }
+    );
   }
 }
 

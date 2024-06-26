@@ -23,15 +23,13 @@ namespace ListaTarefasBackend
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson();
 
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            
-            // Configuração do CORS para permitir todas as origens, métodos e cabeçalhos
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -42,8 +40,7 @@ namespace ListaTarefasBackend
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -52,12 +49,23 @@ namespace ListaTarefasBackend
 
             app.UseRouting();
 
-            // Habilita o CORS usando a política definida anteriormente
             app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 
-            app.UseCors("CorsPolicy");
+            // Middleware para capturar exceções
+            app.Use(async (context, next) =>
+            {
+                try
+                {
+                    await next.Invoke();
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Erro não tratado");
+                    throw;
+                }
+            });
 
             app.UseEndpoints(endpoints =>
             {

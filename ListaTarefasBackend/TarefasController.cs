@@ -35,14 +35,30 @@ public class TarefasController : ControllerBase
     {
         if (id != tarefa.Id)
         {
-            return BadRequest();
+            return BadRequest("ID da tarefa não corresponde ao ID fornecido.");
         }
 
         _context.Entry(tarefa).State = EntityState.Modified;
-        _context.SaveChanges();
+        try
+        {
+            _context.SaveChanges();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!_context.Tarefas.Any(e => e.Id == id))
+            {
+                return NotFound();
+            }
+            else
+            {
+                throw;
+            }
+        }
 
         return NoContent();
     }
+
+
 
     [HttpDelete("{id}")]
     public IActionResult DeleteTarefa(int id)

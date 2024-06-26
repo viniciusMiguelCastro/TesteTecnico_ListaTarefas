@@ -2,13 +2,12 @@
 
 <div class="lista-tarefas">
   <h1>Lista de Tarefas</h1>
-  <ul>
-    <li *ngFor="let tarefa of tarefas">
-      {{ tarefa }}
-      <button (click)="marcarConcluida(tarefa)">Marcar como Concluída</button>
-      <button (click)="excluirTarefa(tarefa)">Excluir</button>
-    </li>
-  </ul>
+  <div *ngFor="let tarefa of tarefas" [ngClass]="{'tarefa': true, 'tarefa-concluida': tarefa.concluida}">
+    <span>{{ tarefa.descricao }}</span>
+    <button class="botao-concluir" (click)="marcarConcluida(tarefa)">Concluir</button>
+    <button (click)="excluirTarefa(tarefa)">Excluir</button>
+  </div>
+  
   <form (submit)="adicionarTarefa($event)">
     <input type="text" placeholder="Nova tarefa" name="novaTarefa" [(ngModel)]="novaTarefa" [ngModelOptions]="{ standalone: true }">
     <button type="submit">Adicionar</button>
